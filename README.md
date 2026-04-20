@@ -1,35 +1,39 @@
 ### Harald Hammershaug
 - Studentnummer: S374171
-- E-post: S374171@oslomet.no
+- E‑post: S374171@oslomet.no
 
 # Student Management Web API (Assignment #3)
 
-Small REST Web API that manages students in a SQL database. Returns JSON over HTTP.  
-Implements CRUD plus two endpoints: calculate grades and course-wise report.
+Liten REST Web API som håndterer studenter i en lokal SQL‑database. Returnerer JSON over HTTP.  
+Inneholder CRUD + to endepunkter: beregne karakterer og kursvise rapporter.
 
-## Stack
-- C# + ASP.NET Core (.NET 8)
-- SQL Server (local)
+## Teknologi Brukt (Stack)
+- C# + ASP.NET Core (.NET 10)
+- SQL Server (lokal) + SSMS
 - JSON over HTTP (REST)
-- Scalar (OpenAPI UI) or Postman for testing
+- Scalar (OpenAPI UI) / Postman
 
-## Prerequisites
-- .NET SDK installed (`dotnet --version`)
-- SQL Server + SSMS (Developer edition)
-- VS Code + “C# Dev Kit” extension (recommended)
+## Forutsetninger
+- .NET 10 SDK (`dotnet --version` → 10.x)
+- SQL Server Developer + SSMS installert
+- VS Code + “C# Dev Kit”
 
-## Setup (from scratch)
+## Kom i gang (med starter-repo)
+
+### klon repoet
+git clone https://github.com/kashifsanadar/data2410-api-v1.git
+cd data2410-api-v1
+code .
+
+#### 1) Opprett database
+Åpne SSMS → koble til localhost (eller localhost\SQLEXPRESS)
+Databases → New Database… → navn: StudentsDb
+
+#### 2) Sett connection string (appsettings.json)
+Windows Authentication (anbefalt for lokal utvikling):
+
 ```bash
-# create solution + webapi project
-mkdir StudentApi && cd StudentApi
-dotnet new sln -n StudentApi
-dotnet new webapi -n StudentApi -f net8.0
-dotnet sln add StudentApi/StudentApi.csproj
-
-# add EF Core for SQL Server
-cd StudentApi
-dotnet add package Microsoft.EntityFrameworkCore.SqlServer
-dotnet add package Microsoft.EntityFrameworkCore.Tools
-
-# trust dev HTTPS cert (first time only)
-dotnet dev-certs https --trust
+"ConnectionStrings": {
+  "DefaultConnection": "Server=localhost;Database=StudentsDb;Trusted_Connection=True;TrustServerCertificate=True;"
+}
+```
