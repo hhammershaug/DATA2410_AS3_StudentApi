@@ -1,6 +1,5 @@
-### Harald Hammershaug
-- Studentnummer: S374171
-- E‑post: S374171@oslomet.no
+### Students
+- Harald Hammershaug (S374171)
 
 # Student Management Web API (Assignment #3)
 
