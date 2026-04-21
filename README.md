@@ -43,7 +43,7 @@ dotnet run --project .\data2410-api-v1.csproj
    - Flere eksempler:
      ```json
      { "name": "John Doe", "course": "DATA2410", "marks": 85 }
-     { "name": "Alex Lee", "course": "DATA2411", "marks": 73 }
+     { "name": "Alex Lee", "course": "DATA2410", "marks": 73 }
      ```
    - Verifiser med GET `/api/Students` (liste alle)
 3. Kjør POST `/api/Students/calculate-grades` (uten body)
