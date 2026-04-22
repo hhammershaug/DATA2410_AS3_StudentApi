@@ -1,8 +1,9 @@
 ## Students
 - Harald Hammershaug (S374171)
--
--
--
+- [Name] ([ID])
+- [Name] ([ID])
+- [Name] ([ID])
+
 
 # Student Management Web API (Assignment #3)
 
@@ -40,18 +41,20 @@ dotnet run --project .\data2410-api-v1.csproj
    - Headers: `Content-Type: application/json`
    - Body (eksempel):
      ```json
-     { "name": "Jane Smith", "course": "DATA2410", "marks": 92 }
+     { "name": "Alex Lee", "course": "DATA2410", "marks": 73 }
      ```
    - Flere eksempler:
      ```json
-     { "name": "John Doe", "course": "DATA2410", "marks": 85 }
-     { "name": "Alex Lee", "course": "DATA2410", "marks": 73 }
+     { "name": "Anthony Black", "course": "DATA2410", "marks": 85 }
+     { "name": "Jane Smith", "course": "DATA2500", "marks": 92 }
      ```
    - Verifiser med GET `/api/Students` (liste alle)
 3. Kjør POST `/api/Students/calculate-grades` (uten body)
    - Forventer at hver student får `"grade"` satt til A/B/C/D
 4. Kjør GET `/api/Students/report`
    - Forventer kursvis: `totalStudents`, `averageMarks` (2 desimaler), og `gradeDistribution`
+5. (Valgfritt) Slette en student via DELETE `/api/Students/{id}`
+    verifiser med GET `/api/Students`
 
 
 ## Feilsøking
@@ -65,3 +68,10 @@ dotnet dev-certs https --clean
 dotnet dev-certs https --trust
 ```
 
+### Reset databasen i SSMS
+- (Valgfritt) Tømme tabellen og resette student ID's i SSMS (SQL Server Management Studio):
+
+```sql
+DELETE FROM Students;
+DBCC CHECKIDENT ('Students', RESEED, 0);
+```

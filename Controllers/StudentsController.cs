@@ -109,7 +109,7 @@ public class StudentsController(IConfiguration config) : ControllerBase
         using var conn = new SqlConnection(_connectionString);
         await conn.OpenAsync();
 
-        // read Id and Marks, decide each student's grade
+        // read STUDENTS(Id, Marks)
         var updates = new List<(int Id, string Grade)>();
         using (var cmd = new SqlCommand("SELECT Id, Marks FROM Students", conn))
         using (var r = await cmd.ExecuteReaderAsync())
@@ -118,6 +118,7 @@ public class StudentsController(IConfiguration config) : ControllerBase
             {
                 int id = r.GetInt32(0);
                 int marks = r.GetInt32(1);
+                // calculate GRADE using GetGrade(marks):
                 string grade = GetGrade(marks); // map marks → A/B/C/D
                 updates.Add((id, grade));
             }
@@ -155,7 +156,7 @@ public class StudentsController(IConfiguration config) : ControllerBase
             }
         }
 
-        // return 200 OK
+        // return student grades
         return Ok(updated);
     }
     // ---------------- END POST calculate-grades ----------------
@@ -207,11 +208,28 @@ public class StudentsController(IConfiguration config) : ControllerBase
             });
         }
 
-        // return 200 OK
+        // return student report
         return Ok(result);
     }
     // ---------------- END GET report ----------------
 
+
+    // -------- HTTP DELETE: /api/Students/{id} --------
+    // Delete one student by id
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(int id)
+    {
+        using var conn = new SqlConnection(_connectionString);
+        await conn.OpenAsync();
+
+        using var cmd = new SqlCommand("DELETE FROM Students WHERE Id = @Id", conn);
+        cmd.Parameters.AddWithValue("@Id", id);
+
+        var rows = await cmd.ExecuteNonQueryAsync();
+        return rows == 0 ? NotFound() : NoContent(); // 404 if not found, 204 on success
+    }
+    // ---------------- END DELETE ----------------
+    
 
 }
 // END StudentsController
